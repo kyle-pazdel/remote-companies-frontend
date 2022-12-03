@@ -16,10 +16,23 @@ export function Home() {
   return (
     <div>
       <h1>Remote-Friendly Companies</h1>
+      <div className="row">
+        <p className="col">Name</p>
+        <p className="col">Website</p>
+        <p className="col">Region</p>
+        <p className="col">Favorite</p>
+      </div>
       {companies.map((company) => (
-        <p>
-          {company.name} | {company.url} | {company.region}
-        </p>
+        <div className="card">
+          <div className="row">
+            <p className="col">{company.name}</p>{" "}
+            <a className="col btn btn-primary" href={company.url} target="_blank">
+              See Site
+            </a>{" "}
+            <p className="col">{company.region}</p> |
+            <div className="col">{company.favorite === true ? <p>*</p> : <p>_</p>}</div>
+          </div>
+        </div>
       ))}
     </div>
   );
