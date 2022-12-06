@@ -5,6 +5,15 @@ import { CompaniesIndex } from "./CompaniesIndex";
 
 export function Home() {
   const [searchFilter, setSearchFilter] = useState("");
+  const [companies, setCompanies] = useState([]);
+
+  const handleIndexCompanies = () => {
+    axios.get("/companies.json").then((response) => {
+      setCompanies(response.data);
+    });
+  };
+
+  useEffect(handleIndexCompanies, []);
 
   return (
     <div>
@@ -22,7 +31,7 @@ export function Home() {
           <p className="col">Region</p>
           <p className="col">Favorite</p>
         </div>
-        <CompaniesIndex searchFilter={searchFilter} />
+        <CompaniesIndex companies={companies} searchFilter={searchFilter} />
       </div>
     </div>
   );

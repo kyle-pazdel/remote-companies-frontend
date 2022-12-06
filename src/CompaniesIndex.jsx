@@ -2,24 +2,15 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 export function CompaniesIndex(props) {
-  const [companies, setCompanies] = useState([]);
   const [currentCompany, setCurrentCompany] = useState({});
-
-  const handleIndexCompanies = () => {
-    axios.get("/companies.json").then((response) => {
-      setCompanies(response.data);
-    });
-  };
 
   const handleCompanyHighlight = (company) => {
     setCurrentCompany(company);
-    console.log(currentCompany);
   };
 
-  useEffect(handleIndexCompanies, []);
   return (
     <div>
-      {companies
+      {props.companies
         .filter((company) => company.region?.toLowerCase().includes(props.searchFilter.toLowerCase()))
         .map((company) => (
           <div
