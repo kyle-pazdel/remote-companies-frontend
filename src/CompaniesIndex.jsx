@@ -10,7 +10,7 @@ export function CompaniesIndex(props) {
 
   return (
     <div>
-      {props.companies
+      {props.currentCompanies
         .filter((company) => company.region?.toLowerCase().includes(props.searchFilter.toLowerCase()))
         .map((company) => (
           <div

@@ -6,14 +6,26 @@ import { CompaniesIndex } from "./CompaniesIndex";
 export function Home() {
   const [searchFilter, setSearchFilter] = useState("");
   const [companies, setCompanies] = useState([]);
+  const [itemOffset, setItemOffset] = useState(0);
 
   const handleIndexCompanies = () => {
     axios.get("/companies.json").then((response) => {
       setCompanies(response.data);
     });
   };
-
   useEffect(handleIndexCompanies, []);
+
+  const itemsPerPage = 30;
+  const endOffset = itemOffset + itemsPerPage;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentCompanies = companies.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(companies.length / itemsPerPage);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % companies.length;
+    console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
+    setItemOffset(newOffset);
+  };
 
   return (
     <div>
@@ -31,7 +43,16 @@ export function Home() {
           <p className="col">Region</p>
           <p className="col">Favorite</p>
         </div>
-        <CompaniesIndex companies={companies} searchFilter={searchFilter} />
+        <CompaniesIndex currentCompanies={currentCompanies} searchFilter={searchFilter} />
+        <ReactPaginate
+          breakLabel="-"
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="< previous"
+          renderOnZeroPageCount={null}
+        />
       </div>
     </div>
   );
