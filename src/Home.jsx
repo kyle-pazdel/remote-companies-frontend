@@ -2,7 +2,6 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { CompaniesIndex } from "./CompaniesIndex";
-import ReactStars from "react-rating-stars-component";
 
 export function Home() {
   const [searchFilter, setSearchFilter] = useState("");
@@ -11,8 +10,17 @@ export function Home() {
 
   const handleIndexCompanies = () => {
     axios.get("/companies.json").then((response) => {
-      setCompanies(response.data);
+      sortCompanies(response.data);
     });
+  };
+
+  const sortCompanies = (companies) => {
+    if (companies) {
+      companies.sort((a, b) => (a.id > b.id ? 1 : -1));
+      setCompanies(companies);
+    } else {
+      null;
+    }
   };
   useEffect(handleIndexCompanies, []);
 
