@@ -45,6 +45,12 @@ export function Home() {
         </div>
         <CompaniesIndex currentCompanies={currentCompanies} searchFilter={searchFilter} />
         <ReactPaginate
+          className="d-flex justify-content-evenly list-group-horizontal"
+          pageClassName="list-group-item"
+          previousClassName="list-group-item"
+          nextClassName="list-group-item"
+          breakClassName="list-group-item"
+          activeClassName="list-group-item active"
           breakLabel="-"
           nextLabel="next >"
           onPageChange={handlePageClick}
