@@ -26,13 +26,11 @@ export function Home() {
 
   const itemsPerPage = 20;
   const endOffset = itemOffset + itemsPerPage;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const currentCompanies = companies.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(companies.length / itemsPerPage);
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % companies.length;
-    console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
     setItemOffset(newOffset);
   };
 
