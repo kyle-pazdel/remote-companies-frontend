@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { CompaniesIndex } from "./CompaniesIndex";
+import ReactStars from "react-rating-stars-component";
 
 export function Home() {
   const [searchFilter, setSearchFilter] = useState("");
@@ -15,7 +16,7 @@ export function Home() {
   };
   useEffect(handleIndexCompanies, []);
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 20;
   const endOffset = itemOffset + itemsPerPage;
   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const currentCompanies = companies.slice(itemOffset, endOffset);
