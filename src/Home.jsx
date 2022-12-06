@@ -15,7 +15,7 @@ export function Home() {
   };
   useEffect(handleIndexCompanies, []);
 
-  const itemsPerPage = 30;
+  const itemsPerPage = 10;
   const endOffset = itemOffset + itemsPerPage;
   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const currentCompanies = companies.slice(itemOffset, endOffset);
@@ -45,10 +45,12 @@ export function Home() {
         </div>
         <CompaniesIndex currentCompanies={currentCompanies} searchFilter={searchFilter} />
         <ReactPaginate
-          className="d-flex justify-content-evenly list-group-horizontal"
+          className="w-100 d-flex justify-content-evenly list-group list-group-horizontal"
           pageClassName="list-group-item"
           previousClassName="list-group-item"
+          previousLinkClassName="btn btn-primary btn-sm"
           nextClassName="list-group-item"
+          nextLinkClassName="btn btn-primary btn-sm"
           breakClassName="list-group-item"
           activeClassName="list-group-item active"
           breakLabel="-"
