@@ -22,7 +22,18 @@ export function CompaniesIndex(props) {
   const handleUpdateCompanyFavorite = (id, favorite) => {
     const params = { favorite: String(favorite) };
     console.log(params);
-    axios.patch(`/companies/${id}.json`, params).then((response) => console.log(response.data));
+    axios.patch(`/companies/${id}.json`, params).then((response) => {
+      console.log(response.data);
+      props.sortCompanies(
+        props.currentCompanies.map((company) => {
+          if (company.id === response.data.id) {
+            return response.data;
+          } else {
+            return company;
+          }
+        })
+      );
+    });
   };
 
   return (
@@ -45,7 +56,7 @@ export function CompaniesIndex(props) {
                 <div className="col">
                   <ReactStars
                     count={1}
-                    value={0}
+                    value={Number(company.favorite)}
                     onChange={() => handleUpdateCompanyFavorite(company.id, true)}
                     size={30}
                     isHalf={false}
@@ -57,8 +68,7 @@ export function CompaniesIndex(props) {
                 <div className="col" onClick={() => handleUpdateCompanyFavorite(company.id, false)}>
                   <ReactStars
                     count={1}
-                    value={1}
-                    // onChange={() => handleUpdateCompanyFavorite(company.id, false)}
+                    value={Number(company.favorite)}
                     size={30}
                     isHalf={false}
                     activeColor="#E1AD01"
