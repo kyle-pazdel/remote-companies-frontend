@@ -4,25 +4,26 @@ import ReactStars from "react-rating-stars-component";
 
 export function CompaniesIndex(props) {
   const [currentCompany, setCurrentCompany] = useState({});
+  // const [favoriteCompanyId, setFavoriteCompanyId] = useState(0);
+  const [favorite, setFavorite] = useState({});
 
   const handleCompanyHighlight = (company) => {
     setCurrentCompany(company);
   };
 
-  // const handleUpdateCompany = (id) => {
-  //   // const params = {favorite: companyFavoriteStatus}
-  //   axios.patch(`/companies/${id}.json`, params).then((response) => {
-  //     setReviews(
-  //       companies.map((company) => {
-  //         if (company.id === response.data.id) {
-  //           return response.data;
-  //         } else {
-  //           return company;
-  //         }
-  //       })
-  //     );
+  // const handleUpdateCompany = (id, favorite) => {
+  // const params = {favorite: favorite,};
+  // axios.patch(`/companies/${id}.json`, params).then((response) => {props.sortCompanies(companies.map((company)=> {if (company.id === response.data.id) {
+  //   return response.data;
+  // } else {
+  //   return company;
+  // }}))});
 
-  //   });
+  const handleUpdateCompanyFavorite = (id, favorite) => {
+    const params = { favorite: String(favorite) };
+    console.log(params);
+    axios.patch(`/companies/${id}.json`, params).then((response) => console.log(response.data));
+  };
 
   return (
     <div>
@@ -39,16 +40,33 @@ export function CompaniesIndex(props) {
               See Site
             </a>{" "}
             <p className="col">{company.region}</p> |<p className="col">{String(company.favorite)}</p> |
-            <ReactStars
-              className="col"
-              count={1}
-              value={0}
-              // onChange={() => handleUpdateFavorite(company.id)}
-              size={30}
-              isHalf={false}
-              activeColor="#e98dd7"
-              color="#ecb5bd"
-            />
+            <>
+              {company.favorite !== true ? (
+                <div className="col">
+                  <ReactStars
+                    count={1}
+                    value={0}
+                    onChange={() => handleUpdateCompanyFavorite(company.id, true)}
+                    size={30}
+                    isHalf={false}
+                    activeColor="#E1AD01"
+                    color="#ecb5bd"
+                  />
+                </div>
+              ) : (
+                <div className="col" onClick={() => handleUpdateCompanyFavorite(company.id, false)}>
+                  <ReactStars
+                    count={1}
+                    value={1}
+                    // onChange={() => handleUpdateCompanyFavorite(company.id, false)}
+                    size={30}
+                    isHalf={false}
+                    activeColor="#E1AD01"
+                    color="#ecb5bd"
+                  />
+                </div>
+              )}
+            </>
           </div>
         ))}
     </div>
