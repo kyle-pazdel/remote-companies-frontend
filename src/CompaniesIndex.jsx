@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import ReactStars from "react-rating-stars-component";
-impo;
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export function CompaniesIndex(props) {
   const [currentCompany, setCurrentCompany] = useState({});
@@ -65,17 +66,31 @@ export function CompaniesIndex(props) {
             </a>{" "}
             <p className="col">{company.region}</p>
             {currentCompany.id === company.id ? (
+              // <form className="col row" onSubmit={handleUpdateDate}>
+              //   {company.date_visited !== null ? (
+
+              //     <input
+              //       type="date"
+              //       value={date}
+              //       onChange={(event) => setDate(event.target.value)}
+              //       className="col-10 me-1"
+              //     />
+              //   ) : (
+              //     <input type="date" className="col-10 me-1" />
+              //   )}
+              //   <button type="submit" className="col-1 btn btn-primary btn-sm"></button>
+              // </form>
               <form className="col row" onSubmit={handleUpdateDate}>
-                {company.date_visited !== null ? (
-                  <input
-                    type="date"
-                    value={date}
-                    onChange={(event) => setDate(event.target.value)}
-                    className="col-10 me-1"
-                  />
-                ) : (
-                  <input type="date" className="col-10 me-1" />
-                )}
+                <DatePicker
+                  className="form-control"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  // isClearable
+                  placeholderText={currentCompany.date_visited}
+                  selected={date}
+                  onChange={(date) => setDate(date)}
+                  dateFormat="MMMM d, yyyy"
+                />
                 <button type="submit" className="col-1 btn btn-primary btn-sm"></button>
               </form>
             ) : (
