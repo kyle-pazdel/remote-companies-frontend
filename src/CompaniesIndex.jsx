@@ -50,33 +50,17 @@ export function CompaniesIndex(props) {
             <a className="col btn btn-primary" href={company.url} target="_blank">
               See Site
             </a>{" "}
-            <p className="col">{company.region}</p> |<p className="col">{String(company.favorite)}</p> |
-            <>
-              {company.favorite !== true ? (
-                <div className="col">
-                  <ReactStars
-                    count={1}
-                    value={Number(company.favorite)}
-                    onChange={() => handleUpdateCompanyFavorite(company.id, true)}
-                    size={30}
-                    isHalf={false}
-                    activeColor="#E1AD01"
-                    color="#ecb5bd"
-                  />
-                </div>
-              ) : (
-                <div className="col" onClick={() => handleUpdateCompanyFavorite(company.id, false)}>
-                  <ReactStars
-                    count={1}
-                    value={Number(company.favorite)}
-                    size={30}
-                    isHalf={false}
-                    activeColor="#E1AD01"
-                    color="#ecb5bd"
-                  />
-                </div>
-              )}
-            </>
+            <p className="col">{company.region}</p> |<p className="col">{Number(company.favorite)}</p> |
+            <div className="col" onClick={() => handleUpdateCompanyFavorite(company.id, !company.favorite)}>
+              <ReactStars
+                count={1}
+                value={Number(company.favorite)}
+                size={30}
+                isHalf={false}
+                activeColor="#E1AD01"
+                color="#ecb5bd"
+              />
+            </div>
           </div>
         ))}
     </div>
