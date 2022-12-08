@@ -45,10 +45,10 @@ export function Home() {
           onChange={(e) => setSearchFilter(e.target.value)}
         ></input>
         <div className="row mt-4">
-          <p className="col">Name</p>
-          <p className="col">Website</p>
-          <p className="col">Region</p>
-          <p className="col">Favorite</p>
+          <p className="col fw-bold">Name</p>
+          <p className="col fw-bold">Website</p>
+          <p className="col fw-bold">Region</p>
+          <p className="col fw-bold">Favorite</p>
         </div>
         <CompaniesIndex
           currentCompanies={currentCompanies}
@@ -57,7 +57,7 @@ export function Home() {
           companies={companies}
         />
         <ReactPaginate
-          className="w-100 d-flex justify-content-evenly list-group list-group-horizontal"
+          className="w-100 d-flex mt-3 justify-content-evenly list-group list-group-horizontal"
           pageClassName="list-group-item"
           previousClassName="list-group-item"
           previousLinkClassName="btn btn-primary btn-sm"

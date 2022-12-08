@@ -40,7 +40,7 @@ export function CompaniesIndex(props) {
             <a className="col btn btn-primary" href={company.url} target="_blank">
               See Site
             </a>{" "}
-            <p className="col">{company.region}</p> |<p className="col">{Number(company.favorite)}</p> |
+            <p className="col">{company.region}</p>
             <div className="col" onClick={() => handleUpdateCompanyFavorite(company.id, !company.favorite)}>
               <ReactStars
                 count={1}
