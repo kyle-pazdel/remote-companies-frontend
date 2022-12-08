@@ -41,6 +41,7 @@ export function CompaniesIndex(props) {
               See Site
             </a>{" "}
             <p className="col">{company.region}</p>
+            <div className="col">{String(company.date_visited)}</div>
             <div className="col" onClick={() => handleUpdateCompanyFavorite(company.id, !company.favorite)}>
               <ReactStars
                 count={1}

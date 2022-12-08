@@ -48,6 +48,7 @@ export function Home() {
           <p className="col fw-bold">Name</p>
           <p className="col fw-bold">Website</p>
           <p className="col fw-bold">Region</p>
+          <p className="col fw-bold">Date Visited</p>
           <p className="col fw-bold">Favorite</p>
         </div>
         <CompaniesIndex
