@@ -4,7 +4,7 @@ import ReactStars from "react-rating-stars-component";
 
 export function CompaniesIndex(props) {
   const [currentCompany, setCurrentCompany] = useState({});
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(0);
 
   const handleCompanyHighlight = (company) => {
     setCurrentCompany(company);
@@ -61,7 +61,11 @@ export function CompaniesIndex(props) {
             <p className="col">{company.region}</p>
             <div className="col">{String(company.date_visited)}</div>
             <form className="col row" onSubmit={handleUpdateDate}>
-              <input type="date" className="col-10 me-1" />
+              {company.date_visited !== null ? (
+                <input type="date" value={company.date_visited} className="col-10 me-1" />
+              ) : (
+                <input type="date" className="col-10 me-1" />
+              )}
               <button type="submit" className="col-1 btn btn-primary btn-sm"></button>
             </form>
             <div className="col" onClick={() => handleUpdateCompanyFavorite(company.id, !company.favorite)}>
