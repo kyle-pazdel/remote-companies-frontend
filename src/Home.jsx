@@ -50,7 +50,12 @@ export function Home() {
           <p className="col">Region</p>
           <p className="col">Favorite</p>
         </div>
-        <CompaniesIndex currentCompanies={currentCompanies} searchFilter={searchFilter} sortCompanies={sortCompanies} />
+        <CompaniesIndex
+          currentCompanies={currentCompanies}
+          searchFilter={searchFilter}
+          sortCompanies={sortCompanies}
+          companies={companies}
+        />
         <ReactPaginate
           className="w-100 d-flex justify-content-evenly list-group list-group-horizontal"
           pageClassName="list-group-item"

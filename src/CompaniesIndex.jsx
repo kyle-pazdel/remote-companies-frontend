@@ -1,23 +1,13 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ReactStars from "react-rating-stars-component";
 
 export function CompaniesIndex(props) {
   const [currentCompany, setCurrentCompany] = useState({});
-  // const [favoriteCompanyId, setFavoriteCompanyId] = useState(0);
-  const [favorite, setFavorite] = useState({});
 
   const handleCompanyHighlight = (company) => {
     setCurrentCompany(company);
   };
-
-  // const handleUpdateCompany = (id, favorite) => {
-  // const params = {favorite: favorite,};
-  // axios.patch(`/companies/${id}.json`, params).then((response) => {props.sortCompanies(companies.map((company)=> {if (company.id === response.data.id) {
-  //   return response.data;
-  // } else {
-  //   return company;
-  // }}))});
 
   const handleUpdateCompanyFavorite = (id, favorite) => {
     const params = { favorite: String(favorite) };
@@ -25,7 +15,7 @@ export function CompaniesIndex(props) {
     axios.patch(`/companies/${id}.json`, params).then((response) => {
       console.log(response.data);
       props.sortCompanies(
-        props.currentCompanies.map((company) => {
+        props.companies.map((company) => {
           if (company.id === response.data.id) {
             return response.data;
           } else {
