@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import ReactStars from "react-rating-stars-component";
+impo;
 
 export function CompaniesIndex(props) {
   const [currentCompany, setCurrentCompany] = useState({});
@@ -8,6 +9,7 @@ export function CompaniesIndex(props) {
 
   const handleCompanyHighlight = (company) => {
     setCurrentCompany(company);
+    setDate(company.date_visited);
   };
 
   const handleUpdateCompanyFavorite = (id, favorite) => {
@@ -27,10 +29,13 @@ export function CompaniesIndex(props) {
     });
   };
 
-  const handleUpdateDate = (id, favorite) => {
-    const params = { favorite: String(favorite) };
-    console.log(params);
-    axios.patch(`/companies/${id}.json`, params).then((response) => {
+  const handleUpdateDate = (event) => {
+    event.preventDefault();
+    console.log(date);
+    const params = {
+      date_visited: date,
+    };
+    axios.patch(`/companies/${currentCompany.id}.json`, params).then((response) => {
       console.log(response.data);
       props.sortCompanies(
         props.companies.map((company) => {
@@ -59,15 +64,23 @@ export function CompaniesIndex(props) {
               See Site
             </a>{" "}
             <p className="col">{company.region}</p>
-            <div className="col">{String(company.date_visited)}</div>
-            <form className="col row" onSubmit={handleUpdateDate}>
-              {company.date_visited !== null ? (
-                <input type="date" value={company.date_visited} className="col-10 me-1" />
-              ) : (
-                <input type="date" className="col-10 me-1" />
-              )}
-              <button type="submit" className="col-1 btn btn-primary btn-sm"></button>
-            </form>
+            {currentCompany.id === company.id ? (
+              <form className="col row" onSubmit={handleUpdateDate}>
+                {company.date_visited !== null ? (
+                  <input
+                    type="date"
+                    value={date}
+                    onChange={(event) => setDate(event.target.value)}
+                    className="col-10 me-1"
+                  />
+                ) : (
+                  <input type="date" className="col-10 me-1" />
+                )}
+                <button type="submit" className="col-1 btn btn-primary btn-sm"></button>
+              </form>
+            ) : (
+              <div className="col">{String(company.date_visited)}</div>
+            )}
             <div className="col" onClick={() => handleUpdateCompanyFavorite(company.id, !company.favorite)}>
               <ReactStars
                 count={1}
