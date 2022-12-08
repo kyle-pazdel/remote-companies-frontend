@@ -4,12 +4,30 @@ import ReactStars from "react-rating-stars-component";
 
 export function CompaniesIndex(props) {
   const [currentCompany, setCurrentCompany] = useState({});
+  const [date, setDate] = useState();
 
   const handleCompanyHighlight = (company) => {
     setCurrentCompany(company);
   };
 
   const handleUpdateCompanyFavorite = (id, favorite) => {
+    const params = { favorite: String(favorite) };
+    console.log(params);
+    axios.patch(`/companies/${id}.json`, params).then((response) => {
+      console.log(response.data);
+      props.sortCompanies(
+        props.companies.map((company) => {
+          if (company.id === response.data.id) {
+            return response.data;
+          } else {
+            return company;
+          }
+        })
+      );
+    });
+  };
+
+  const handleUpdateDate = (id, favorite) => {
     const params = { favorite: String(favorite) };
     console.log(params);
     axios.patch(`/companies/${id}.json`, params).then((response) => {
@@ -42,6 +60,10 @@ export function CompaniesIndex(props) {
             </a>{" "}
             <p className="col">{company.region}</p>
             <div className="col">{String(company.date_visited)}</div>
+            <form className="col row" onSubmit={handleUpdateDate}>
+              <input type="date" className="col-10 me-1" />
+              <button type="submit" className="col-1 btn btn-primary btn-sm"></button>
+            </form>
             <div className="col" onClick={() => handleUpdateCompanyFavorite(company.id, !company.favorite)}>
               <ReactStars
                 count={1}
