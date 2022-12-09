@@ -30,8 +30,11 @@ export function CompaniesIndex(props) {
 
   const handleDateChange = (event) => {
     event.preventDefault();
-    setDate(new Date(event.target.value));
-    console.log("date: ", date);
+    const userOffset = new Date().getTimezoneOffset() * 60 * 1000;
+    const localDate = new Date(event.target.value);
+    const utcDate = new Date(localDate.getTime() + userOffset);
+    console.log("utcDate: ", utcDate);
+    setDate(utcDate);
   };
 
   const handleUpdateDate = (event) => {
