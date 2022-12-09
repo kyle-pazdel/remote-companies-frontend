@@ -7,6 +7,7 @@ export function Home() {
   const [searchFilter, setSearchFilter] = useState("");
   const [companies, setCompanies] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
+  const [date, setDate] = useState(new Date());
 
   const handleIndexCompanies = () => {
     axios.get("/companies.json").then((response) => {

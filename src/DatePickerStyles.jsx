@@ -17,7 +17,7 @@ const Styles = styled.div`
 export default function DatePickerStyles(props) {
   return (
     <Styles>
-      <DatePickerComponent />
+      <DatePickerComponent currentCompany={props.currentCompany} date={props.date} setDate={props.setDate} />
     </Styles>
   );
 }
