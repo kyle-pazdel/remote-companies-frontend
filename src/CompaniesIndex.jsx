@@ -3,10 +3,11 @@ import { useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import styled from "styled-components";
 
 export function CompaniesIndex(props) {
   const [currentCompany, setCurrentCompany] = useState({});
-  const [date, setDate] = useState(0);
+  const [date, setDate] = useState(new Date());
 
   const handleCompanyHighlight = (company) => {
     setCurrentCompany(company);
@@ -30,9 +31,16 @@ export function CompaniesIndex(props) {
     });
   };
 
+  const handleDateChange = (event) => {
+    event.preventDefault();
+    console.log(event.target.value);
+    setDate(String(event.target.value));
+    // console.log(date);
+  };
+
   const handleUpdateDate = (event) => {
     event.preventDefault();
-    console.log(date);
+    console.log(new Date(date));
     const params = {
       date_visited: date,
     };
@@ -50,6 +58,18 @@ export function CompaniesIndex(props) {
     });
   };
 
+  const Styles = styled.div`
+    .react-datepicker-wrapper,
+    .react-datepicker__input-container,
+    .react-datepicker__input-container input {
+      width: 250px;
+    }
+    .react-datepicker__close-icon::before,
+    .react-datepicker__close-icon::after {
+      background-color: #ff00ff;
+    }
+  `;
+
   return (
     <div>
       {props.currentCompanies
@@ -66,13 +86,29 @@ export function CompaniesIndex(props) {
             </a>{" "}
             <p className="col">{company.region}</p>
             {currentCompany.id === company.id ? (
+              <form className="col row" onSubmit={handleUpdateDate}>
+                <Styles>
+                  <DatePicker
+                    // className="form-control"
+                    // aria-label="Sizing example input"
+                    // aria-describedby="inputGroup-sizing-sm"
+                    isClearable
+                    placeholderText={currentCompany.date_visited}
+                    selected={date}
+                    // onSelect={handleUpdateDate}
+                    onChange={handleUpdateDate}
+                    dateFormat="MMMM d, yyyy"
+                  />
+                </Styles>
+                <button type="submit" className="col-1 btn btn-primary btn-sm"></button>
+              </form>
+            ) : (
               // <form className="col row" onSubmit={handleUpdateDate}>
               //   {company.date_visited !== null ? (
-
               //     <input
               //       type="date"
               //       value={date}
-              //       onChange={(event) => setDate(event.target.value)}
+              //       onChange={(e) => handleDateChange(e.target.value)}
               //       className="col-10 me-1"
               //     />
               //   ) : (
@@ -80,20 +116,6 @@ export function CompaniesIndex(props) {
               //   )}
               //   <button type="submit" className="col-1 btn btn-primary btn-sm"></button>
               // </form>
-              <form className="col row" onSubmit={handleUpdateDate}>
-                <DatePicker
-                  className="form-control"
-                  aria-label="Sizing example input"
-                  aria-describedby="inputGroup-sizing-sm"
-                  // isClearable
-                  placeholderText={currentCompany.date_visited}
-                  selected={date}
-                  onChange={(date) => setDate(date)}
-                  dateFormat="MMMM d, yyyy"
-                />
-                <button type="submit" className="col-1 btn btn-primary btn-sm"></button>
-              </form>
-            ) : (
               <div className="col">{String(company.date_visited)}</div>
             )}
             <div className="col" onClick={() => handleUpdateCompanyFavorite(company.id, !company.favorite)}>
