@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import ReactStars from "react-rating-stars-component";
+import { format } from "date-fns";
 
 export function CompaniesIndex(props) {
   const [currentCompany, setCurrentCompany] = useState({});
@@ -53,6 +54,14 @@ export function CompaniesIndex(props) {
     });
   };
 
+  const formatDate = (date) => {
+    if (date) {
+      return format(new Date(date), "MM/dd/yyyy");
+    } else {
+      return null;
+    }
+  };
+
   return (
     <div>
       {props.currentCompanies
@@ -69,12 +78,12 @@ export function CompaniesIndex(props) {
             </a>{" "}
             <p className="col">{company.region}</p>
             {currentCompany.id === company.id ? (
-              <form className="col row" onSubmit={handleUpdateDate}>
+              <form className="col row ms-1" onSubmit={handleUpdateDate}>
                 <input type="date" value={date} onChange={handleDateChange} className="col-10 me-1" />
                 <button type="submit" className="col-1 btn btn-primary btn-sm"></button>
               </form>
             ) : (
-              <div className="col">{String(company.date_visited)}</div>
+              <div className="col">{formatDate(company.date_visited)}</div>
             )}
             <div className="col" onClick={() => handleUpdateCompanyFavorite(company.id, !company.favorite)}>
               <ReactStars
